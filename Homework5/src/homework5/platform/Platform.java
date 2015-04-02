@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import javax.swing.*;
 public class Platform {
 	private final int maxConsoleLines = 9; 
 	private final int maxShowablePlugins = 10;
+	private static String pluginFolderPath;
 	
 	JFrame window;
 	JPanel listPanel;
@@ -129,6 +131,19 @@ public class Platform {
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				try {
+					File currentDirectory = new File("");
+					String commonPath = currentDirectory.getAbsolutePath();
+					commonPath = commonPath.substring(commonPath.lastIndexOf(File.separator) + 1);
+
+					pluginFolderPath = commonPath + "\\plugin";
+					File pluginDir = new File(pluginFolderPath);
+					if (!pluginDir.exists() || !pluginDir.isDirectory()){
+						pluginDir.mkdirs();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				Platform p = new Platform();
 			}
 		});
