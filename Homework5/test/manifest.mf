@@ -1,2 +1,0 @@
-Plugin-Class: edu.rosehulman.PluginImpl
-Plugin-Name: Hello World Plugin

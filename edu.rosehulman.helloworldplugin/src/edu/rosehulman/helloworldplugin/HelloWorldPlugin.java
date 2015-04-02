@@ -1,3 +1,4 @@
+package edu.rosehulman.helloworldplugin;
 import homework5.platform.IPlugin;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ public class HelloWorldPlugin implements IPlugin{
 
 	JPanel display;
 	String title = "Hello World Plugin";
-	HelloWorldPlugin(){
+	public HelloWorldPlugin(){
 		
 		//set up display
 		display = new JPanel();

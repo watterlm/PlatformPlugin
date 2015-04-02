@@ -34,11 +34,11 @@ public class Platform{
 
         @Override
         public boolean accept(final File dir, final String name) {
-            for (final String ext : EXTENSIONS) {
-                if (name.endsWith("." + ext)) {
+            //for (final String ext : EXTENSIONS) {
+                if (name.endsWith(".jar")) {
                     return (true);
                 }
-            }
+           // }
             return (false);
         }
     };
@@ -147,27 +147,31 @@ public class Platform{
 		plugins = new ArrayList<IPlugin>();
 		
 		//find files and add from getName()
-		File dir = new File("pluginFolderPath");
+		File dir = new File(pluginFolderPath);
 		
 		try {
-			for (final File f: dir.listFiles(JAR_FILTER)){
+			System.out.println("finding plugins");
+			for (File f: dir.listFiles(JAR_FILTER)){
 				ClassLoader pluginLoader;
-		
+				System.out.println("Name:" + f.getName());
 		        pluginLoader = URLClassLoader.newInstance(new URL[] { f.toURI().toURL() });
 		        
-		        JarFile jf = new JarFile(f.getName());
+		        JarFile jf = new JarFile(f.getPath());
+		        
 		        Manifest manifest = jf.getManifest();
 		        Attributes att = manifest.getMainAttributes();
 		        String pluginClassName = att.getValue("Plugin-Name");
-		        
+		        System.out.println("Plugin Class Name  "+pluginClassName);
 		        IPlugin plugin;
+		        
 		        plugin = (IPlugin) pluginLoader.loadClass(
 				                pluginClassName).newInstance();
-	
+		        System.out.println("Plugin Title: "+plugin.getTitle());
 		        plugins.add(plugin);
 	        }
 		} catch(Exception e){
 			
+			System.out.println("Error in loadPluginList: " + e.getMessage());
 		}
 		
 	}
@@ -175,7 +179,7 @@ public class Platform{
 	//replaces the current display panel with the new one
 	public void updateDisplayPanel(JPanel newPanel){
 		window.remove(displayPanel);
-		displayPanel = newPanel;
+		displayPanel = newPanel;	
 		window.add(displayPanel,BorderLayout.CENTER);
 		
 	}

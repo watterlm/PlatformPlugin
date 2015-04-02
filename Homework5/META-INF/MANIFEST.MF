@@ -3,3 +3,4 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Homework5
 Bundle-SymbolicName: Homework5
 Bundle-Version: 1.0.0.alpha
+Export-Package: homework5.platform
