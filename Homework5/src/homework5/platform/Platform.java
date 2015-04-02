@@ -5,7 +5,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 import javax.swing.*;
 
@@ -13,6 +22,24 @@ public class Platform {
 	private final int maxConsoleLines = 9; 
 	private final int maxShowablePlugins = 10;
 	private static String pluginFolderPath;
+	
+	// array of supported extensions (use a List if you prefer)
+    static final String[] EXTENSIONS = new String[]{
+        "jar"
+    };
+    // filter to identify images based on their extensions
+    final FilenameFilter JAR_FILTER = new FilenameFilter() {
+
+        @Override
+        public boolean accept(final File dir, final String name) {
+            for (final String ext : EXTENSIONS) {
+                if (name.endsWith("." + ext)) {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+    };
 	
 	JFrame window;
 	JPanel listPanel;
@@ -23,7 +50,7 @@ public class Platform {
 	JButton runPlugin;
 	
 	ArrayList<String> statusConsoleHistory;
-	ArrayList<String> pluginNames;
+	ArrayList<IPlugin> plugins;
 	public Platform(){
 		loadPluginList();
 		
@@ -44,9 +71,9 @@ public class Platform {
 		JPanel empty = new JPanel();
 		empty.setVisible(false);
 		listPanel.add(empty);
-		for(int i = 0; i<pluginNames.size() && i<maxShowablePlugins; i++)
+		for(int i = 0; i<plugins.size() && i<maxShowablePlugins; i++)
 		{
-			runPlugin = new JButton(pluginNames.get(i));
+			runPlugin = new JButton(plugins.get(i).getTitle());
 			listPanel.add(runPlugin);
 		}	
 			
@@ -74,7 +101,7 @@ public class Platform {
 		
 		statusConsoleHistory = new ArrayList<String>();
 		printStatus("Welcome to Plugin Project!");
-		if(pluginNames.size()>maxShowablePlugins)
+		if(plugins.size()>maxShowablePlugins)
 		{
 			printStatus("More than " +  maxShowablePlugins + " Plugins Found! Only showing the first " + maxShowablePlugins + ".");
 		}
@@ -107,15 +134,30 @@ public class Platform {
 	}
 	
 	public void loadPluginList(){
-		pluginNames = new ArrayList<String>();
+		plugins = new ArrayList<IPlugin>();
 		
 		//find files and add from getName()
-		pluginNames.add("Hello World Plugin");
-		pluginNames.add("Plugin 2");
-		pluginNames.add("Plugin 3");
-		for(int x=4;x<14;x++)
-		{
-			pluginNames.add("Plugin "+ x);
+		File dir = new File("pluginFolderPath");
+		
+		try {
+			for (final File f: dir.listFiles(JAR_FILTER)){
+				ClassLoader pluginLoader;
+		
+		        pluginLoader = URLClassLoader.newInstance(new URL[] { f.toURI().toURL() });
+		        
+		        JarFile jf = new JarFile(f.getName());
+		        Manifest manifest = jf.getManifest();
+		        Attributes att = manifest.getMainAttributes();
+		        String pluginClassName = att.getValue("Plugin-Name");
+		        
+		        IPlugin plugin;
+		        plugin = (IPlugin) pluginLoader.loadClass(
+				                pluginClassName).newInstance();
+	
+		        plugins.add(plugin);
+	        }
+		} catch(Exception e){
+			
 		}
 		
 	}

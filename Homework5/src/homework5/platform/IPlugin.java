@@ -1,3 +1,4 @@
+package homework5.platform;
 
 import javax.swing.*;
 

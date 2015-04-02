@@ -1,3 +1,5 @@
+import homework5.platform.IPlugin;
+
 import javax.swing.*;
 
 

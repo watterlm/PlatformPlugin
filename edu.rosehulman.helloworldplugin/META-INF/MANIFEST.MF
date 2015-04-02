@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Helloworldplugin
+Bundle-SymbolicName: edu.rosehulman.helloworldplugin
+Bundle-Version: 1.0.0.alpha
+Bundle-Activator: edu.rosehulman.helloworldplugin.HelloWorldActivator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
