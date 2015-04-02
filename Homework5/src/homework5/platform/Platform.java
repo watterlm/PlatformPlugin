@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -18,7 +20,7 @@ import java.util.jar.Manifest;
 
 import javax.swing.*;
 
-public class Platform {
+public class Platform{
 	private final int maxConsoleLines = 9; 
 	private final int maxShowablePlugins = 10;
 	private static String pluginFolderPath;
@@ -74,6 +76,14 @@ public class Platform {
 		for(int i = 0; i<plugins.size() && i<maxShowablePlugins; i++)
 		{
 			runPlugin = new JButton(plugins.get(i).getTitle());
+			final IPlugin plugin = plugins.get(i);
+			runPlugin.addActionListener(new ActionListener() {
+				  @Override
+				  public void actionPerformed(ActionEvent ae) {
+				    updateDisplayPanel(plugin.show());
+				    printStatus(plugin.getStatus());
+				  }
+				});
 			listPanel.add(runPlugin);
 		}	
 			
