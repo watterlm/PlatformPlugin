@@ -37,6 +37,7 @@ public class CounterPlugin implements IPlugin{
 			  public void actionPerformed(ActionEvent ae) {
 				  cnt++;
 				  counterLabel.setText(cnt+"");
+				  p.printStatus("plus");
 			  }
 			});
 		JButton minus = new JButton("-");

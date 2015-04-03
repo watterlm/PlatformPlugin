@@ -27,6 +27,7 @@ public class ColorChangerPlugin implements IPlugin{
 			  @Override
 			  public void actionPerformed(ActionEvent ae) {
 				  display.setBackground(Color.RED);
+				  p.printStatus("Changing color to red");
 			  }
 			});
 		
@@ -35,6 +36,7 @@ public class ColorChangerPlugin implements IPlugin{
 			  @Override
 			  public void actionPerformed(ActionEvent ae) {
 				  display.setBackground(Color.BLUE);
+				  p.printStatus("Changing color to blue");
 			  }
 			});
 		
@@ -43,6 +45,7 @@ public class ColorChangerPlugin implements IPlugin{
 			  @Override
 			  public void actionPerformed(ActionEvent ae) {
 				  display.setBackground(Color.GREEN);
+				  p.printStatus("Changing color to green");
 			  }
 			});
 		
