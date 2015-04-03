@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CounterPlugin
+Bundle-SymbolicName: edu.rosehulman.CounterPlugin
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: edu.rosehulman.counterplugin.CounterActivator
+Import-Package: homework5.platform,
+ org.osgi.framework;version="1.3.0"
+Plugin-Name: edu.rosehulman.counterplugin.CounterPlugin

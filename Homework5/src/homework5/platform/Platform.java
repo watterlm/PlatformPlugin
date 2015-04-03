@@ -8,12 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -53,6 +50,7 @@ public class Platform{
 	
 	ArrayList<String> statusConsoleHistory;
 	ArrayList<IPlugin> plugins;
+	
 	public Platform(){
 		loadPluginList();
 		
@@ -66,7 +64,14 @@ public class Platform{
 		listPanel.setPreferredSize(new Dimension(150, 700));
 		resetList = new JButton("Reload Plugins");
 		resetList.setBounds(10,10,100,100);
-			
+		resetList.addActionListener(new ActionListener() {
+			  @Override
+			  public void actionPerformed(ActionEvent ae) {
+				  printStatus("Reloading Plugins");
+				  loadPluginList();
+			  }
+			});
+		
 		listPanel.add(resetList);
 		//JSeparator line = new JSeparator();
 		//listPanel.add(line);
@@ -81,6 +86,8 @@ public class Platform{
 				  @Override
 				  public void actionPerformed(ActionEvent ae) {
 				    updateDisplayPanel(plugin.show());
+				    window.pack();
+					window.setVisible(true);
 				    printStatus(plugin.getStatus());
 				  }
 				});
@@ -102,7 +109,8 @@ public class Platform{
 		
 		displayPanel = new JPanel();
 		displayPanel.setBackground(Color.GREEN);
-		 	
+		displayPanel.setBackground(Color.LIGHT_GRAY);
+		
 		window.add(statusPanel,BorderLayout.SOUTH);
 		window.add(displayPanel,BorderLayout.CENTER);
 		window.add(listPanel,BorderLayout.WEST);
@@ -143,7 +151,7 @@ public class Platform{
 		statusLabel.setText(text);
 	}
 	
-	public void loadPluginList(){
+	private void loadPluginList(){
 		plugins = new ArrayList<IPlugin>();
 		
 		//find files and add from getName()
@@ -177,11 +185,19 @@ public class Platform{
 	}
 	
 	//replaces the current display panel with the new one
-	public void updateDisplayPanel(JPanel newPanel){
+	@SuppressWarnings("deprecation")
+	private void updateDisplayPanel(JPanel newPanel){
+		/*
 		window.remove(displayPanel);
 		displayPanel = newPanel;	
 		window.add(displayPanel,BorderLayout.CENTER);
+		*/
 		
+		displayPanel.removeAll();
+		displayPanel.hide();
+		newPanel.setPreferredSize(new Dimension(600, 600));
+		displayPanel.add(newPanel);
+		displayPanel.show();				
 	}
 	
 	public static void main(String args[]) {

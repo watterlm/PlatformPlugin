@@ -16,6 +16,7 @@ public class HelloWorldPlugin implements IPlugin{
 		display.add(helloWorldLabel);
 	}
 	
+
 	@Override
 	public JPanel show() {
 		return display;
