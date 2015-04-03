@@ -8,14 +8,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Platform{
 	private final int maxConsoleLines = 9; 
@@ -47,6 +51,7 @@ public class Platform{
 	JLabel statusLabel;
 	JButton resetList;
 	JButton runPlugin;
+	JButton addNewPlugin;
 	
 	ArrayList<String> statusConsoleHistory;
 	ArrayList<IPlugin> plugins;
@@ -62,8 +67,17 @@ public class Platform{
 		listPanel = new JPanel(new GridLayout(maxShowablePlugins+2,0,10,5));
 		listPanel.setBackground(Color.LIGHT_GRAY);
 		listPanel.setPreferredSize(new Dimension(150, 700));
+		addNewPlugin = new JButton("Add Plugin");
+		addNewPlugin.setBounds(10, 10, 100, 100);
+		addNewPlugin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				loadNewJar();
+				loadPluginList();
+			}
+		});
 		resetList = new JButton("Reload Plugins");
-		resetList.setBounds(10,10,100,100);
+		resetList.setBounds(10,110,100,100);
 		resetList.addActionListener(new ActionListener() {
 			  @Override
 			  public void actionPerformed(ActionEvent ae) {
@@ -72,6 +86,7 @@ public class Platform{
 			  }
 			});
 		
+		listPanel.add(addNewPlugin);
 		listPanel.add(resetList);
 		//JSeparator line = new JSeparator();
 		//listPanel.add(line);
@@ -149,6 +164,23 @@ public class Platform{
 		}
 		text += "</HTML>";
 		statusLabel.setText(text);
+	}
+	
+	private void loadNewJar(){
+		JFileChooser chooser = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        "JAR Plugins only", "jar");
+	    chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(this.displayPanel);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	    	File selectedFile = chooser.getSelectedFile();
+			printStatus("Adding New Plugin");
+			try {
+				Files.copy(selectedFile.toPath(), (new File(pluginFolderPath + "\\" + selectedFile.getName())).toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	    }
 	}
 	
 	private void loadPluginList(){
