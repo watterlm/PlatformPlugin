@@ -7,12 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import homework5.platform.IPlugin;
+import homework5.platform.Platform;
 
 import javax.swing.*;
 
 
 public class CounterPlugin implements IPlugin{
-
+	Platform p;
 	JPanel display;
 	String title = "Counter Plugin";
 	int cnt;
@@ -45,10 +46,9 @@ public class CounterPlugin implements IPlugin{
 			  public void actionPerformed(ActionEvent ae) {
 				  cnt--;
 				  counterLabel.setText(cnt+"");
+				  p.printStatus("minus");
 			  }
 			});
-		
-		
 		display.add(titleLabel,BorderLayout.NORTH);
 		centerPanel.add(plus,BorderLayout.EAST);
 		centerPanel.add(counterLabel,BorderLayout.CENTER);
@@ -56,6 +56,8 @@ public class CounterPlugin implements IPlugin{
 		
 		display.add(centerPanel,BorderLayout.CENTER);
 		display.setVisible(true);
+		
+
 	}
 	
 
@@ -73,5 +75,12 @@ public class CounterPlugin implements IPlugin{
 	public String getTitle() {
 		return title;
 	}
+
+
+	@Override
+	public void setPlatform(Platform pl) {
+		p = pl;		
+	}
+	
 
 }

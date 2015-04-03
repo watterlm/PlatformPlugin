@@ -22,6 +22,8 @@ public class Platform{
 	private final int maxShowablePlugins = 10;
 	private static String pluginFolderPath;
 	
+	private String activePlugin = "";
+	
 	// array of supported extensions (use a List if you prefer)
     static final String[] EXTENSIONS = new String[]{
         "jar"
@@ -69,6 +71,9 @@ public class Platform{
 			  public void actionPerformed(ActionEvent ae) {
 				  printStatus("Reloading Plugins");
 				  loadPluginList();
+				  displayPanel.removeAll();
+				  displayPanel.hide();
+				  displayPanel.show();
 			  }
 			});
 		
@@ -83,12 +88,14 @@ public class Platform{
 			runPlugin = new JButton(plugins.get(i).getTitle());
 			final IPlugin plugin = plugins.get(i);
 			runPlugin.addActionListener(new ActionListener() {
-				  @Override
+				  @SuppressWarnings({ "deprecation", "static-access" })
+				@Override
 				  public void actionPerformed(ActionEvent ae) {
 				    updateDisplayPanel(plugin.show());
 				    window.pack();
 					window.setVisible(true);
 				    printStatus(plugin.getStatus());
+				    
 				  }
 				});
 			listPanel.add(runPlugin);
@@ -176,6 +183,9 @@ public class Platform{
 				                pluginClassName).newInstance();
 		        System.out.println("Plugin Title: "+plugin.getTitle());
 		        plugins.add(plugin);
+		        Platform p = this;
+		        plugin.setPlatform(p);
+		        
 	        }
 		} catch(Exception e){
 			

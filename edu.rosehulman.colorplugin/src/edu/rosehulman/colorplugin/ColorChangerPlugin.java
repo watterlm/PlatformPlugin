@@ -5,12 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import homework5.platform.IPlugin;
+import homework5.platform.Platform;
 
 import javax.swing.*;
 
 
 public class ColorChangerPlugin implements IPlugin{
-
+	Platform p;
 	JPanel display;
 	String title = "Color Changer Plugin";
 	public ColorChangerPlugin(){
@@ -68,5 +69,9 @@ public class ColorChangerPlugin implements IPlugin{
 	public String getTitle() {
 		return title;
 	}
-
+	
+	@Override
+	public void setPlatform(Platform pl) {
+		p = pl;		
+	}
 }

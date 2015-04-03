@@ -1,11 +1,12 @@
 package edu.rosehulman.helloworldplugin;
 import homework5.platform.IPlugin;
+import homework5.platform.Platform;
 
 import javax.swing.*;
 
 
 public class HelloWorldPlugin implements IPlugin{
-
+	Platform p;
 	JPanel display;
 	String title = "Hello World Plugin";
 	public HelloWorldPlugin(){
@@ -30,6 +31,11 @@ public class HelloWorldPlugin implements IPlugin{
 	@Override
 	public String getTitle() {
 		return title;
+	}
+
+	@Override
+	public void setPlatform(Platform pl) {
+		p = pl;
 	}
 
 }
