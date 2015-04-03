@@ -88,6 +88,34 @@ public class Platform{
 				  displayPanel.removeAll();
 				  displayPanel.hide();
 				  displayPanel.show();
+				  listPanel.removeAll();
+				  
+				  listPanel.add(addNewPlugin);
+					listPanel.add(resetList);
+					//JSeparator line = new JSeparator();
+					//listPanel.add(line);
+					JPanel empty = new JPanel();
+					empty.setVisible(false);
+					listPanel.add(empty);
+					//JSeparator line = new JSeparator();
+					for(int i = 0; i<plugins.size() && i<maxShowablePlugins; i++)
+					{
+						runPlugin = new JButton(plugins.get(i).getTitle());
+						final IPlugin plugin = plugins.get(i);
+						runPlugin.addActionListener(new ActionListener() {
+							  @SuppressWarnings({ "deprecation", "static-access" })
+							@Override
+							  public void actionPerformed(ActionEvent ae) {
+							    updateDisplayPanel(plugin.show());
+							    window.pack();
+								window.setVisible(true);
+							    printStatus(plugin.getStatus());
+							    
+							  }
+							});
+						listPanel.add(runPlugin);
+					}	
+				  
 			  }
 			});
 		
