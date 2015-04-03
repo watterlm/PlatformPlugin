@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KnockKnockplugin
+Bundle-SymbolicName: edu.rosehulman.knockknockplugin
+Bundle-Version: 1.0.0.alpha
+Bundle-Activator: edu.rosehulman.knockknockplugin.KnockKnockJokeActivator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Import-Package: homework5.platform
+Plugin-Name: edu.rosehulman.knockknockplugin.KnockKnockPlugin

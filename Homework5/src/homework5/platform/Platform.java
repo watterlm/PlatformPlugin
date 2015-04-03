@@ -122,22 +122,12 @@ public class Platform{
 		{
 			printStatus("More than " +  maxShowablePlugins + " Plugins Found! Only showing the first " + maxShowablePlugins + ".");
 		}
-		
-		/*
-		//testing
-		JPanel testPanel = new JPanel();
-		testPanel.setBackground(Color.BLUE);
-		updateDisplayPanel(testPanel);			
-		//
-		*/
 	}
 	
 	private void setupList(){
 		listPanel.removeAll();
 		listPanel.add(addNewPlugin);
 		listPanel.add(resetList);
-		//JSeparator line = new JSeparator();
-		//listPanel.add(line);
 		JPanel empty = new JPanel();
 		empty.setVisible(false);
 		listPanel.add(empty);
@@ -192,6 +182,12 @@ public class Platform{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+	    } else {
+	    	loadPluginList();
+			displayPanel.removeAll();
+			displayPanel.hide();
+			displayPanel.show();
+			setupList();
 	    }
 	}
 	
