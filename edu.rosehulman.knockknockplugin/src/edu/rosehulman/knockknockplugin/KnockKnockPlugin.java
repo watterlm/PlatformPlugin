@@ -29,14 +29,14 @@ public class KnockKnockPlugin implements IPlugin {
 	
 	public KnockKnockPlugin(){
 		setJokes();
-		//p.printStatus("Set Jokes. Time for some fun.");
+		p.printStatus("Set Jokes. Time for some fun.");
 		
 		getJoke();
 		
 		//set up display
 		display = new JPanel(new BorderLayout());
 		display.setBackground(Color.GRAY);
-		final JLabel titleLabel = new JLabel();
+		final JLabel titleLabel = new JLabel("Counter Plugin");
 		
 		JPanel centerPanel = new JPanel();//new BorderLayout());
 		centerPanel.setSize(new Dimension(500, 100));
@@ -85,7 +85,7 @@ public class KnockKnockPlugin implements IPlugin {
 	}
 	
 	private void getJoke(){
-		//p.printStatus("Getting a random joke.");
+		p.printStatus("Getting a random joke.");
 		currentJoke = jokes.get(randIndex());
 	}
 
